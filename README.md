@@ -2,7 +2,7 @@
 
 Всем привет сегодня решил выложить новый проэкт. Это часы с ESP32 и lcd_1602 дисплеем
 
-Согласно распиновке ![Uploading image.png…]()
+Согласно распиновке ![image](https://github.com/user-attachments/assets/1602a62c-f6b7-46a4-b1cd-6632e9a1f1f4)
 
 подключаемся на D22(SLC) и D21(SDA)
 
