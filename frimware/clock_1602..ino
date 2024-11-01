@@ -3,8 +3,8 @@
 #include <time.h>
 
 
-const char* ssid = "your_ssid";
-const char* pass = "your_pass"; 
+const char* ssid = "your_wifi";
+const char* pass = "your_pass";
 
 
 LiquidCrystal_I2C lcd(0x27, 16,2);
@@ -49,10 +49,10 @@ WiFi.disconnect();
 
   
   init_digits();
-  drow_digit(0,0,0);// digit , colounm, row
-  drow_digit(1,3,0);
-  drow_digit(2,6,0);
-  drow_digit(3,9,0);
+  drow_digit(0,0);// digit , colounm, default row  - 0
+  drow_digit(1,3);
+  drow_digit(2,6);
+  drow_digit(3,9);
 }
 
 void loop() {
@@ -77,7 +77,7 @@ void loop() {
     if(i == 2)  i_tmp=7;
     if(i == 3)  i_tmp=10;
   
-    drow_digit(time_p.charAt(i) - '0', i_tmp, 0);
+    drow_digit(time_p.charAt(i) - '0', i_tmp);
     Serial.println();
     Serial.println(time_p.charAt(i)- '0');
     Serial.println();
@@ -91,97 +91,97 @@ Serial.print("-----------------------------");
   delay(10000);
 }
 
-void drow_digit(int dig, int x, int y){
+void drow_digit(int dig, int x){
   switch (dig) {
     case 0:
-      lcd.setCursor(x, y); // set cursor to column 0, line 0 (first row)
-      lcd.write(0);  // call each segment to create
-      lcd.write(1);  // top half of the number
+      lcd.setCursor(x, 0); 
+      lcd.write(0);  
+      lcd.write(1);  
       lcd.write(2);
-      lcd.setCursor(x, y + 1); // set cursor to colum 0, line 1 (second row)
-      lcd.write(3);  // call each segment to create
-      lcd.write(4);  // bottom half of the number
+      lcd.setCursor(x, 1); 
+      lcd.write(3);  
+      lcd.write(4);  
       lcd.write(5);
       break;
     case 1:
-      lcd.setCursor(x + 1, y);
+      lcd.setCursor(x + 1, 0);
       lcd.write(1);
       lcd.write(2);
-      lcd.setCursor(x + 2, y + 1);
+      lcd.setCursor(x + 2, 1);
       lcd.write(5);
       break;
     case 2:
-      lcd.setCursor(x, y);
+      lcd.setCursor(x, 0);
       lcd.write(6);
       lcd.write(6);
       lcd.write(2);
-      lcd.setCursor(x, y + 1);
+      lcd.setCursor(x, 1);
       lcd.write(3);
       lcd.write(7);
       lcd.write(7);
       break;
     case 3:
-      lcd.setCursor(x, y);
+      lcd.setCursor(x, 0);
       lcd.write(6);
       lcd.write(6);
       lcd.write(2);
-      lcd.setCursor(x, y + 1);
+      lcd.setCursor(x, 1);
       lcd.write(7);
       lcd.write(7);
       lcd.write(5);
       break;
     case 4:
-      lcd.setCursor(x, y);
+      lcd.setCursor(x, 0);
       lcd.write(3);
       lcd.write(4);
       lcd.write(2);
-      lcd.setCursor(x + 2, y + 1);
+      lcd.setCursor(x + 2, 1);
       lcd.write(5);
       break;
     case 5:
-      lcd.setCursor(x, y);
+      lcd.setCursor(x, 0);
       lcd.write(0);
       lcd.write(6);
       lcd.write(6);
-      lcd.setCursor(x, y + 1);
+      lcd.setCursor(x, 1);
       lcd.write(7);
       lcd.write(7);
       lcd.write(5);
       break;
     case 6:
-      lcd.setCursor(x, y);
+      lcd.setCursor(x, 0);
       lcd.write(0);
       lcd.write(6);
       lcd.write(6);
-      lcd.setCursor(x, y + 1);
+      lcd.setCursor(x, 1);
       lcd.write(3);
       lcd.write(7);
       lcd.write(5);
       break;
     case 7:
-      lcd.setCursor(x, y);
+      lcd.setCursor(x, 0);
       lcd.write(1);
       lcd.write(1);
       lcd.write(2);
-      lcd.setCursor(x + 1, y + 1);
+      lcd.setCursor(x + 1, 1);
       lcd.write(0);
       break;
     case 8:
-      lcd.setCursor(x, y);
+      lcd.setCursor(x, 0);
       lcd.write(0);
       lcd.write(6);
       lcd.write(2);
-      lcd.setCursor(x, y + 1);
+      lcd.setCursor(x, 1);
       lcd.write(3);
       lcd.write(7);
       lcd.write(5);
       break;
     case 9:
-      lcd.setCursor(x, y);
+      lcd.setCursor(x, 0);
       lcd.write(0);
       lcd.write(6);
       lcd.write(2);
-      lcd.setCursor(x + 1, y + 1);
+      lcd.setCursor(x + 1, 1);
       lcd.write(4);
       lcd.write(5);
       break;
