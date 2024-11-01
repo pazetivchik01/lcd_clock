@@ -7,6 +7,9 @@ const char* ssid = "your_wifi";
 const char* pass = "your_pass";
 
 
+struct tm timeinfo;
+
+
 LiquidCrystal_I2C lcd(0x27, 16,2);
 
 byte LT[] = {B00111,  B01111,  B11111,  B11111,  B11111,  B11111,  B11111,  B11111};
@@ -34,40 +37,49 @@ void setup() {
   Serial.println("Подключено к Wi-Fi");
 
 
-
   configTime(3 * 3600, 0, "time.google.com", "time.nist.gov");
+
 delay(1000);
-    struct tm timeinfo;
-  if (!getLocalTime(&timeinfo)) {
-    Serial.println("Не удалось получить время");
-    return;
+
+    
+  while(!getLocalTime(&timeinfo)) {
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("ERROR");
+    lcd.setCursor(0,1);
+    lcd.print("FAILD TO GET TIME");
+    Serial.println("неудалось получить время (failed to get time)");
+
+    delay(1000);
   }
 
-WiFi.disconnect();
+  WiFi.disconnect();
+  
       Serial.print("Текущее время: ");
-  Serial.print(asctime(&timeinfo));
+      Serial.print(asctime(&timeinfo));
 
   
   init_digits();
-  drow_digit(0,0);// digit , colounm, default row  - 0
-  drow_digit(1,3);
-  drow_digit(2,6);
-  drow_digit(3,9);
+  draw_digit(0,0);// digit , colounm, default row  - 0
+  draw_digit(1,3);
+  draw_digit(2,6);
+  draw_digit(3,9);
 }
 
 void loop() {
 
- struct tm timeinfo;
+  lcd.clear();
+
   if (!getLocalTime(&timeinfo)) {
     lcd.clear();
     lcd.setCursor(0,0);
-    lcd.print("Не удалось");
+    lcd.print("ERROR");
     lcd.setCursor(0,1);
-    lcd.print("Получить время");
-    Serial.println("Не удалось получить время");
+    lcd.print("FAILD GET TIME");
+    Serial.println("неудалось получить время (failed to get time)");
     return;
   }
-  lcd.clear();
+  
   String time_p = extractTime(asctime(&timeinfo));
   time_p.remove(2, 1);
   int i_tmp;
@@ -77,12 +89,9 @@ void loop() {
     if(i == 2)  i_tmp=7;
     if(i == 3)  i_tmp=10;
   
-    drow_digit(time_p.charAt(i) - '0', i_tmp);
-    Serial.println();
-    Serial.println(time_p.charAt(i)- '0');
-    Serial.println();
+    draw_digit(time_p.charAt(i) - '0', i_tmp);
+    
   }
-Serial.print("-----------------------------");
   lcd.setCursor(6,0);
   lcd.write(165);
   lcd.setCursor(6,1);
@@ -91,7 +100,7 @@ Serial.print("-----------------------------");
   delay(10000);
 }
 
-void drow_digit(int dig, int x){
+void draw_digit(int dig, int x){
   switch (dig) {
     case 0:
       lcd.setCursor(x, 0); 
