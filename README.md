@@ -4,7 +4,7 @@
 
 Согласно распиновке ![image](https://github.com/user-attachments/assets/295123e0-301e-4b9c-9ecc-fefc3a989928)
 
-подключаемся на D22(SLC) и D21(SDA)
+подключаемся на D22(SDL) и D21(SDA)
 
 Накатываем прошивку и радуемся
 
